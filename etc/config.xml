@@ -6,6 +6,7 @@
                 <file>api_logger.log</file>
                 <level>info</level>
                 <add_slashes>0</add_slashes>
+                <filter_only>0</filter_only>
             </api_log>
         </system>
     </default>

@@ -1,9 +1,6 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
-        <tab id="phpro" sortOrder="10" translate="label">
-            <label>Phpro</label>
-        </tab>
         <section id="system">
             <tab>advanced</tab>
             <resource>Phpro_APILogger::config_rest_api_logger</resource>
@@ -18,6 +15,13 @@
                 </field>
                 <field id="add_slashes" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="0" showInStore="0">
                     <label>Add (back)slashes for the request and response messages</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="filter" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Filter specific rest endpoints</label>
+                </field>
+                <field id="filter_only" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>If yes, the logger will only be applied to the filter value</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>

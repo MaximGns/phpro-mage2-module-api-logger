@@ -16,7 +16,6 @@
             </argument>
         </arguments>
     </virtualType>
-
     <type name="Phpro\APILogger\Plugin\RestApiLog">
         <arguments>
             <argument name="logger" xsi:type="object">phpro_api_logger</argument>

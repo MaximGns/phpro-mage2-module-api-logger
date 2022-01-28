@@ -9,6 +9,7 @@ use Magento\Framework\Webapi;
 use Magento\Framework\Webapi\Rest\Response;
 use Magento\Webapi\Controller\Rest;
 use Phpro\APILogger\Config\SystemConfiguration;
+use Phpro\APILogger\Service\LogService;
 use Psr\Log\LoggerInterface;
 
 class RestApiLog
@@ -24,10 +25,12 @@ class RestApiLog
 
     public function __construct(
         LoggerInterface $logger,
-        SystemConfiguration $configuration
+        SystemConfiguration $configuration,
+        LogService $logService
     ) {
         $this->logger = $logger;
         $this->configuration = $configuration;
+        $this->logService = $logService;
     }
 
     public function aroundDispatch(
@@ -35,6 +38,10 @@ class RestApiLog
         callable $proceed,
         HttpRequest $request
     ) {
+
+        if (false === $this->logService->shouldLog($request)) {
+            return $proceed($request);
+        }
         $time_pre = microtime(true);
         $response = $proceed($request);
         list($responseStatusCode, $responseBody) = $this->getResponseData($response);
@@ -64,7 +71,7 @@ class RestApiLog
         $responseCode = $response->getStatusCode();
         if ($exception instanceof Webapi\Exception) {
             $responseCode = $exception->getHttpCode();
-            $responseBody = $responseBody . ' ' . json_encode($exception->getDetails());
+            $responseBody .= ' ' . json_encode($exception->getDetails());
         }
 
         return [$responseCode, $responseBody];
